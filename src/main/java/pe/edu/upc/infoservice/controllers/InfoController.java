@@ -16,7 +16,6 @@ import pe.edu.upc.infoservice.models.ResponseAuth;
 import pe.edu.upc.infoservice.services.BillService;
 import pe.edu.upc.infoservice.services.PaymentService;
 
-import javax.websocket.server.PathParam;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -42,7 +41,7 @@ public class InfoController {
     @Autowired
     private PaymentService paymentService;
 
-    private final static String URL_PROFILE = "http://localhost:8094/profiles";
+    private final static String URL_PROFILE = "http://localhost:8092/profiles";
     private final static Logger LOGGER = Logger.getLogger("bitacora.subnivel.Control");
     HttpStatus status;
 
@@ -111,7 +110,7 @@ public class InfoController {
     }
 
     @GetMapping(path = "/departments/{id}/bills", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response> getBillsByDepartment(@PathParam("id") Long id, @RequestHeader String Authorization) {
+    public ResponseEntity<Response> getBillsByDepartment(@PathVariable("id") Long id, @RequestHeader String Authorization) {
         try {
             ResponseAuth authToken = authToken(Authorization);
             if (!authToken.isAuthorized()) {
@@ -136,7 +135,7 @@ public class InfoController {
     }
 
     @PostMapping(path = "/departments/{departmentId}/bills/{billId}/pay", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response> savePayment(@PathParam("departmentId") Long departmentId, @PathParam("billId") Long billId, @RequestBody RequestPaySave requestPaySave, @RequestHeader String Authorization) {
+    public ResponseEntity<Response> savePayment(@PathVariable("departmentId") Long departmentId, @PathVariable("billId") Long billId, @RequestBody RequestPaySave requestPaySave, @RequestHeader String Authorization) {
         try {
             ResponseAuth userAuth = authToken(Authorization);
             LOGGER.info("RESPONSE AUTH => " + userAuth);
