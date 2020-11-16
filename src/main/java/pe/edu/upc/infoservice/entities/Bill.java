@@ -23,6 +23,8 @@ public class Bill {
     @Column(nullable = false)
     private float amount;
     @Column(nullable = false)
+    private Long condominiumId;
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
     @Column(nullable = false)
@@ -38,6 +40,8 @@ public class Bill {
     private Payment payment;
     @Column(nullable = false)
     private Long departmentId;
+    @Column(nullable = false)
+    private boolean isDelete;
 
     public void init(String name, String description, Float amount, Date startDate, Date endDate, PaymentCategory category, Long departmentId) {
         this.name = name;

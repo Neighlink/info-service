@@ -6,7 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "payment_categories")
+@Table(name = "paymentCategories")
 @Data
 public class PaymentCategory {
     @Id
@@ -15,6 +15,10 @@ public class PaymentCategory {
     private Long id;
     @Column(nullable = false)
     private String name;
-    @Column()
+    @Column(nullable = true)
     private String description;
+    @Column(nullable = false)
+    private Long condominiumId;
+    @Column(nullable = false)
+    private boolean isDelete;
 }

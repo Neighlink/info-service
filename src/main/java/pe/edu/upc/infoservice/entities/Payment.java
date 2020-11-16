@@ -19,14 +19,13 @@ public class Payment {
     @Column(nullable = false)
     private float amount;
     @Column(nullable = false)
-    private boolean confirmPaid;
-    @Column(nullable = false)
     private Long residentId;
-
-    public void init(Date date, Float amount, Long residentId){
-        this.amount = amount;
-        this.paymentDate = date;
-        this.residentId = residentId;
-        this.confirmPaid = false;
-    }
+    @Column(nullable = false)
+    private String status;
+    @Column(nullable = false)
+    private boolean editable;
+    @Column(nullable = false)
+    private Long deparmentId;
+    @Column(nullable = false)
+    private String urlImage;
 }

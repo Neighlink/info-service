@@ -42,12 +42,17 @@ public class BillSerivceImpl implements BillService {
 
     @Override
     public void deleteById(Long aLong) throws Exception {
-        billRepository.deleteById(aLong);
+        billRepository.deleteBill(aLong);
     }
 
     @Override
     public Optional<List<Bill>> getAllByDepartment(Long departmentId) {
         return billRepository.getAllByDepartment(departmentId);
+    }
+
+    @Override
+    public Optional<List<Bill>> getAllByCondominium(Long condominiumId) {
+        return billRepository.getAllByCondominium(condominiumId);
     }
 
     @Override

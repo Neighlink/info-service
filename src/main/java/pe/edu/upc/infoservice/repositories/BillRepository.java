@@ -11,6 +11,10 @@ import java.util.Optional;
 
 @Repository
 public interface BillRepository extends JpaRepository<Bill, Long> {
-    @Query("SELECT b FROM Bill b WHERE b.departmentId = :departmentId")
-    Optional<List<Bill>> getAllByDepartment(@Param("departmentId") Long departmentId);
+    @Query("SELECT b FROM Bill b WHERE b.departmentId = :departmentId AND b.isDelete = false ")
+    Optional<List<Bill>> getAllByDepartment(@Param("departmentId") Long departmentId );
+    @Query("SELECT b FROM Bill b WHERE b.condominiumId = :condominiumId AND b.isDelete = false ")
+    Optional<List<Bill>> getAllByCondominium(@Param("condominiumId") Long condominiumId);
+    @Query("UPDATE Bill b SET b.isDelete = true WHERE b.id = :billId")
+    Optional<List<Bill>> deleteBill(@Param("billId") Long billId);
 }

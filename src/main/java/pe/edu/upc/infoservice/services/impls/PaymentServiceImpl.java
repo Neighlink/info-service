@@ -39,4 +39,9 @@ public class PaymentServiceImpl implements PaymentService {
     public void deleteById(Long aLong) throws Exception {
         paymentRepository.deleteById(aLong);
     }
+
+    @Override
+    public Optional<List<Payment>> historyByDepartment(Long deparmentId) {
+        return paymentRepository.historyByDepartment(deparmentId);
+    }
 }
