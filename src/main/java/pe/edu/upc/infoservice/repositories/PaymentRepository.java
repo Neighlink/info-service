@@ -11,6 +11,6 @@ import java.util.Optional;
 
 @Repository
 public interface PaymentRepository extends JpaRepository<Payment, Long> {
-    @Query("SELECT p FROM Payment p WHERE p.deparmentId = :departmentId")
-    Optional<List<Payment>> historyByDepartment(@Param("departmentId") Long deparmentId);
+    @Query("SELECT p FROM Payment p WHERE p.billId = :billId ORDER BY p.paymentDate DESC")
+    List<Payment> paymentsByBill(@Param("billId") Long billId);
 }

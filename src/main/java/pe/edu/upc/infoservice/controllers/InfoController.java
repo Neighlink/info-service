@@ -108,7 +108,7 @@ public class InfoController {
 
     // START CRUD BILL
     @GetMapping(path = "/condominiums/{condominiumId}/departments/{departmentId}/bills", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response> getBillsByDepartment(@PathVariable("departmentId") Long departmentId, @RequestHeader String Authorization) {
+    public ResponseEntity<Response> getBillsByDepartment(@PathVariable("condominiumId") Long condominiumId, @PathVariable("departmentId") Long departmentId, @RequestHeader String Authorization) {
         response = new Response();
         try {
             ResponseAuth authToken = authToken(Authorization);
@@ -170,7 +170,7 @@ public class InfoController {
             }
 
             bill.get().setDelete(true);
-            billService.deleteById(billId);
+            billService.save(bill.get());
             okResponse(null);
             return new ResponseEntity<>(response, status);
         } catch
@@ -363,7 +363,7 @@ public class InfoController {
     }
 
     @GetMapping(path = "/departments/{departmentId}/bills/{billId}/pays", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response> historyPayByBill(@PathVariable("departmentId") Long departmentId, @PathVariable("billId") Long billId, @PathVariable("payId") Long payId, @RequestHeader String Authorization) {
+    public ResponseEntity<Response> historyPayByBill(@PathVariable("departmentId") Long departmentId, @PathVariable("billId") Long billId, @RequestHeader String Authorization) {
         response = new Response();
         try {
             ResponseAuth userAuth = authToken(Authorization);
@@ -371,23 +371,15 @@ public class InfoController {
                 unauthorizedResponse();
                 return new ResponseEntity<>(response, status);
             }
+
             Optional<Bill> bill = billService.findById(billId);
             if (bill.isEmpty()) {
                 notFoundResponse();
                 return new ResponseEntity<>(response, status);
             }
-            Optional<Payment> payment = paymentService.findById(payId);
-            if (payment.isEmpty()) {
-                notFoundResponse();
-                return new ResponseEntity<>(response, status);
-            }
 
-            Optional<List<Payment>> payments = paymentService.historyByDepartment(departmentId);
-            if (payments.isEmpty()) {
-                okResponse(new ArrayList<>());
-            } else {
-                okResponse(payments);
-            }
+            List<Payment> payments = paymentService.paymentsByBill(departmentId);
+            okResponse(payments);
 
             return new ResponseEntity<>(response, status);
         } catch (Exception e) {

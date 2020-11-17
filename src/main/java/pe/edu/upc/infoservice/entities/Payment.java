@@ -28,4 +28,6 @@ public class Payment {
     private Long deparmentId;
     @Column(nullable = false)
     private String urlImage;
+    @Column(nullable = false)
+    private Long billId;
 }

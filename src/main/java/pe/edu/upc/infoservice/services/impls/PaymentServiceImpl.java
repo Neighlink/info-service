@@ -41,7 +41,7 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public Optional<List<Payment>> historyByDepartment(Long deparmentId) {
-        return paymentRepository.historyByDepartment(deparmentId);
+    public List<Payment> paymentsByBill(Long billId) {
+        return paymentRepository.paymentsByBill(billId);
     }
 }
